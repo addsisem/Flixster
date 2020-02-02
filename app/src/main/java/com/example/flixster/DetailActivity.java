@@ -1,6 +1,7 @@
 package com.example.flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class DetailActivity extends YouTubeBaseActivity {
     TextView tvOverview;
     RatingBar ratingBar;
     YouTubePlayerView youTubePlayerView;
+    float rating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class DetailActivity extends YouTubeBaseActivity {
         ratingBar = findViewById(R.id.ratingBar);
         youTubePlayerView = findViewById(R.id.player);
 
-        Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
+        final Movie movie = Parcels.unwrap(getIntent().getParcelableExtra("movie"));
         tvTitle.setText(movie.getTitle());
         tvOverview.setText(movie.getOverview());
         ratingBar.setRating((float) movie.getRating());
@@ -63,7 +65,7 @@ public class DetailActivity extends YouTubeBaseActivity {
                     String youtubeKey = results.getJSONObject(0).getString("key");
                     Log.d("DetailActivity", youtubeKey);
 
-                    initializeYoutube(youtubeKey);
+                    initializeYoutube(youtubeKey, movie);
 
                 } catch (JSONException e) {
 
@@ -78,7 +80,7 @@ public class DetailActivity extends YouTubeBaseActivity {
         });
     }
 
-    private void initializeYoutube(final String youtubeKey) {
+    private void initializeYoutube(final String youtubeKey, final Movie movie) {
 
         youTubePlayerView.initialize(YoutubeAPIKey, new YouTubePlayer.OnInitializedListener() {
 
@@ -86,7 +88,16 @@ public class DetailActivity extends YouTubeBaseActivity {
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
 
                 Log.d("DetailActivity", "OnInitializationSuccess");
-                youTubePlayer.cueVideo(youtubeKey);
+
+                if(movie.getRating() <= 5){
+
+                    youTubePlayer.cueVideo(youtubeKey);
+
+                } else{
+
+                    youTubePlayer.loadVideo(youtubeKey); // Auto-play video
+                }
+
             }
 
             @Override
