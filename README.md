@@ -18,10 +18,12 @@ Flixter is an app that allows users to browse movies from the [The Movie Databas
 - [ ] Add a play icon overlay to popular movies to indicate that the movie can be played (1 point).
 - [ ] Apply the popular ButterKnife annotation library to reduce view boilerplate. (1 point)
 - [ ] Add a rounded corners for the images using the Glide transformations. (1 point)
+- [x] Add a scroll bar for long descriptions
 
 ### App Walkthough GIF
 
 <img src="Walkthrough2.gif" title='Video Walkthrough2' width=250><br>
+<img src="Walkthrough2.1.gif" title='Video Walkthrough2.1' width=250><br>
 
 ### Notes
 
